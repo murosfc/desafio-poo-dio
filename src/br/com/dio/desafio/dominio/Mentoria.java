@@ -15,7 +15,7 @@ public class Mentoria extends Conteudo{
     }
 
     public LocalDate getData() {
-        return data;
+        return this.data;
     }
 
     public void setData(LocalDate data) {

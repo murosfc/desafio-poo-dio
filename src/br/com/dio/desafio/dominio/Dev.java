@@ -5,7 +5,7 @@ import java.util.*;
 public class Dev {
     private String nome;
     private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>();
-    private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
+    private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();    
 
     public void inscreverBootcamp(Bootcamp bootcamp){
         this.conteudosInscritos.addAll(bootcamp.getConteudos());
@@ -29,17 +29,12 @@ public class Dev {
             double next = iterator.next().calcularXp();
             soma += next;
         }
-        return soma;
-
-        /*return this.conteudosConcluidos
-                .stream()
-                .mapToDouble(Conteudo::calcularXp)
-                .sum();*/
+        return soma;        
     }
 
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -47,7 +42,7 @@ public class Dev {
     }
 
     public Set<Conteudo> getConteudosInscritos() {
-        return conteudosInscritos;
+        return this.conteudosInscritos;
     }
 
     public void setConteudosInscritos(Set<Conteudo> conteudosInscritos) {
@@ -55,11 +50,40 @@ public class Dev {
     }
 
     public Set<Conteudo> getConteudosConcluidos() {
-        return conteudosConcluidos;
+        return this.conteudosConcluidos;
     }
 
     public void setConteudosConcluidos(Set<Conteudo> conteudosConcluidos) {
         this.conteudosConcluidos = conteudosConcluidos;
+    }
+    
+    public String getCertificado (Curso c) {
+    	if (this.conteudosConcluidos.contains(c)) {
+    		return "\nA DIO certifica que o Aluno: " + this.getNome() +
+    				"\nconcluiu o " + c.getTitulo() + 
+    				"\ncom carga horária de: " +c.getCargaHoraria() +"h";    				
+    	}
+    	else if (this.conteudosInscritos.contains(c)) {
+    		return "O aluno: "  + this.getNome() +
+    				"\nainda não concluiu o "+ c.getTitulo() +"\n";
+    	}
+    	else return "Aluno não inscrito no " + c.getTitulo() +"\n";
+	}  
+    
+    public String gelAllCertificados() {
+    	if (this.conteudosConcluidos.isEmpty()) {
+    		return "Aluno não possui certificado";
+    	} 
+    	else {
+	    	Iterator<Conteudo> iterator = this.conteudosConcluidos.iterator();   		
+	    	while(iterator.hasNext()){
+	    		Curso c = (Curso) iterator.next();
+	    		return "\nA DIO certifica que o Aluno: " + this.getNome() +
+	    				"\nconcluiu o " + c.getTitulo()  +
+	    				"\ncom carga horária de: " + c.getCargaHoraria() +"h";  	    				
+			}
+    	}
+    	return "";    	
     }
 
     @Override
